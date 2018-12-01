@@ -7,6 +7,8 @@ import requests
 import pandas as pd
 import numpy as np
 import re
+import time
+import os
 
 # Base url, and a lambda func to return url for a given year
 base_url = 'http://kenpom.com/index.php'
@@ -70,10 +72,17 @@ df.drop('W-L', inplace=True, axis=1)
 
 
 # Reorder columns just cause I'm OCD
-df=df[[ 'Year', 'Rank', 'Team', 'Conference', 'Wins', 'Losses', 'Seed','Pyth', 
+df=df[['Rank', 'Team', 'Conference', 'Wins', 'Losses', 'Seed','Pyth', 
              'AdjustO', 'AdjustO Rank', 'AdjustD', 'AdjustD Rank',
              'AdjustT', 'AdjustT Rank', 'Luck', 'Luck Rank', 
              'SOS Pyth', 'SOS Pyth Rank', 'SOS OppO', 'SOS OppO Rank',
              'SOS OppD', 'SOS OppD Rank', 'NCSOS Pyth', 'NCSOS Pyth Rank']]
-             
+
+directory = 'out_files/'
+if not os.path.exists(directory):
+	os.mkdir(directory)
+
+filename = directory + str(time.time()) + 'out.csv'
+
+df.to_csv(filename, float_format='%g', index=False)             
 print(df.head(25))

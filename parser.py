@@ -6,9 +6,7 @@ https://github.com/nvitha/Kenpom-Parser
 """
 
 import os
-import re
 import time
-from datetime import datetime
 
 import pandas as pd
 import requests
@@ -38,6 +36,14 @@ def import_kenpom(url):
     return df
 
 
+def get_wins(x):
+    return int(x.split('-')[0])
+
+
+def get_losses(x):
+    return int(x.split('-')[1])
+
+
 def format_df(df):
     # Column rename based off of original website
     df.columns = ['Rank', 'Team', 'Conference', 'W-L', 'AdjEM',
@@ -47,19 +53,13 @@ def format_df(df):
                   'SOS OppD', 'SOS OppD Rank', 'NCSOS AdjEM', 'NCSOS AdjEM Rank']
 
     # Split W-L column into wins and losses
-
-    df['Wins'] = df['W-L'].apply(lambda x: int(re.sub('-.*', '', x)))  # split out wins to own column
-    df['Losses'] = df['W-L'].apply(lambda x: int(re.sub('.*-', '', x)))  # split out losses to own column
+    df['Wins'] = df['W-L'].apply(get_wins)  # split out wins to own column
+    df['Losses'] = df['W-L'].apply(get_losses)  # split out losses to own column
     df.drop('W-L', inplace=True, axis=1)  # drop W-L column
     return df
 
 
 def main():
-    current_year = int(datetime.now().year)         # Figure out current season
-    current_month = int(datetime.now().month)       # If it's after October, choose new year
-    if current_month > 10:
-        current_year += 1
-
     url = 'http://kenpom.com/index.php'
     df = import_kenpom(url)
     df = format_df(df)

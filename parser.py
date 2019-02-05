@@ -2,28 +2,22 @@
 # Original script, and my edits, are licensed under Apache 2.0 http://www.apache.org/licenses/LICENSE-2.0
 
 
-from bs4 import BeautifulSoup
-import requests
-import pandas as pd
-import numpy as np
+import os
 import re
 import time
-import os
+from datetime import datetime
 
-# Base url, and a lambda func to return url for a given year
-base_url = 'http://kenpom.com/index.php'
-url_year = lambda x: '%s?y=%s' % (base_url, str(x) if x != 2016 else base_url)
+import pandas as pd
+import requests
+from bs4 import BeautifulSoup
 
-# Years on kenpom's site (could also scrape this and 
-# set as a list if you want to be more dynamic)
-years = range(2018,2019)
 
 # Create a method that parses a given year and spits out a raw dataframe
 def import_raw_year(year):
     """
     Imports raw data from a ken pom year into a dataframe
     """
-    f = requests.get(url_year(year))
+    f = requests.get(url)
     soup = BeautifulSoup(f.text, features="lxml")
     table_html = soup.find_all('table', {'id': 'ratings-table'})
 
@@ -40,43 +34,29 @@ def import_raw_year(year):
     df = pd.read_html(table)[0]
     df['year'] = year
     return df
-    
 
-# Import all the years into a singular dataframe
-df = None
-for x in years:
-    df = pd.concat( (df, import_raw_year(x)), axis=0) \
-        if df is not None else import_raw_year(2019)
+
+current_year = int(datetime.now().year)
+current_month = int(datetime.now().month)
+if current_month > 8:
+    current_year += 1
+
+url = 'http://kenpom.com/index.php'
+
+df = import_raw_year(current_year)
 
 # Column rename based off of original website
-df.columns = ['Rank', 'Team', 'Conference', 'W-L', 'Pyth', 
-             'AdjustO', 'AdjustO Rank', 'AdjustD', 'AdjustD Rank',
-             'AdjustT', 'AdjustT Rank', 'Luck', 'Luck Rank', 
-             'SOS Pyth', 'SOS Pyth Rank', 'SOS OppO', 'SOS OppO Rank',
-             'SOS OppD', 'SOS OppD Rank', 'NCSOS Pyth', 'NCSOS Pyth Rank', 'Year']
-             
-# Lambda that returns true if given string is a number and a valid seed number (1-16)
-valid_seed = lambda x: True if str(x).replace(' ', '').isdigit() \
-                and int(x) > 0 and int(x) <= 16 else False
-
-# Use lambda to parse out seed/team
-df['Seed'] = df['Team'].apply(lambda x: x[-2:].replace(' ', '') \
-                              if valid_seed(x[-2:]) else np.nan )
-
-df['Team'] = df['Team'].apply(lambda x: x[:-2] if valid_seed(x[-2:]) else x)
+df.columns = ['Rank', 'Team', 'Conference', 'W-L', 'AdjEM',
+              'AdjO', 'AdjO Rank', 'AdjD', 'AdjD Rank',
+              'AdjT', 'AdjT Rank', 'Luck', 'Luck Rank',
+              'SOS AdjEM', 'SOS AdjEM Rank', 'SOS OppO', 'SOS OppO Rank',
+              'SOS OppD', 'SOS OppD Rank', 'NCSOS AdjEM', 'NCSOS AdjEM Rank', 'Year']
 
 # Split W-L column into wins and losses
-df['Wins'] = df['W-L'].apply(lambda x: int(re.sub('-.*', '', x)) )
-df['Losses'] = df['W-L'].apply(lambda x: int(re.sub('.*-', '', x)) )
-df.drop('W-L', inplace=True, axis=1)
 
-
-# Reorder columns just cause I'm OCD
-df=df[['Rank', 'Team', 'Conference', 'Wins', 'Losses', 'Seed','Pyth', 
-             'AdjustO', 'AdjustO Rank', 'AdjustD', 'AdjustD Rank',
-             'AdjustT', 'AdjustT Rank', 'Luck', 'Luck Rank', 
-             'SOS Pyth', 'SOS Pyth Rank', 'SOS OppO', 'SOS OppO Rank',
-             'SOS OppD', 'SOS OppD Rank', 'NCSOS Pyth', 'NCSOS Pyth Rank']]
+df['Wins'] = df['W-L'].apply(lambda x: int(re.sub('-.*', '', x)))    # split out wins to own column
+df['Losses'] = df['W-L'].apply(lambda x: int(re.sub('.*-', '', x)))  # split out losses to own column
+df.drop('W-L', inplace=True, axis=1)                                 # drop W-L column
 
 directory = 'out_files/'
 if not os.path.exists(directory):

@@ -9,5 +9,5 @@ setup(
     author='Nick Vitha',
     author_email='nvitha@github.com',
     description='Parse Kenpom.com for current year data and output to a CSV',
-    install_requires=['bs4', 'pandas', 'numpy', 'lxml', 'matplotlib']
+    install_requires=['bs4', 'pandas', 'numpy', 'lxml', 'matplotlib', 'requests']
 )

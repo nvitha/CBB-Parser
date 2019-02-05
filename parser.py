@@ -80,7 +80,7 @@ df=df[['Rank', 'Team', 'Conference', 'Wins', 'Losses', 'Seed','Pyth',
 
 directory = 'out_files/'
 if not os.path.exists(directory):
-	os.mkdir(directory)
+    os.mkdir(directory)
 
 filename = directory + str(time.time()) + 'out.csv'
 

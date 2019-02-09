@@ -1,0 +1,170 @@
+{
+  "teams":
+  [
+    { "name":"University of Virginia",
+      "nicknames":[
+        "Virginia",
+        "UVA"
+      ]
+    },
+    {
+      "name": "Duke University",
+      "nicknames": [
+        "Duke"
+      ]
+    },
+    {
+      "name": "Gonzaga University",
+      "nicknames": [
+        "Gonzaga",
+        "Zags"
+      ]
+    },
+    {
+      "name": "Michigan State University",
+      "nicknames": [
+        "MSU",
+        "Mich St",
+        "Mich. St",
+        "Michigan St"
+      ]
+    },
+    {
+      "name": "University of Tennessee",
+      "nicknames": [
+        "Tennessee",
+        "Tenn"
+      ]
+    },
+    {
+      "name": "University of Michigan",
+      "nicknames": [
+        "Michigan"
+      ]
+    },
+    {
+      "name": "University of North Carolina",
+      "nicknames": [
+        "UNC",
+        "North Carolina"
+      ]
+    },
+    {
+      "name": "University of Kentucky",
+      "nicknames": [
+        "Kentucky"
+      ]
+    },
+    {
+      "name": "Virginia Tech.",
+      "nicknames": [
+        "Virginia Tech",
+        "VT",
+        "VA Tech"
+      ]
+    },
+    {
+      "name": "Purdue University",
+      "nicknames": [
+        "Purdue"
+      ]
+    },
+    {
+      "name": "University of Wisconsin",
+      "nicknames": [
+        "Wisconsin",
+        "Wisc"
+      ]
+    },
+    {
+      "name": "Iowa State University",
+      "nicknames": [
+        "Iowa State",
+        "Iowa St"
+      ]
+    },
+    {
+      "name": "University of Louisville",
+      "nicknames": [
+        "Louisville"
+      ]
+    },
+    {
+      "name": "Auburn University",
+      "nicknames": [
+        "Auburn"
+      ]
+    },
+    {
+      "name": "Texas Tech University",
+      "nicknames": [
+        "TT",
+        "Texas Tech"
+      ]
+    },
+    {
+      "name": "University of Kansas",
+      "nicknames": [
+        "KU",
+        "Kansas"
+      ]
+    },
+    {
+      "name": "University of Nevada",
+      "nicknames": [
+        "Nevada"
+      ]
+    },
+    {
+      "name": "University of Maryland",
+      "nicknames": [
+        "Maryland"
+      ]
+    },
+    {
+      "name": "University of Houston",
+      "nicknames": [
+        "Houston"
+      ]
+    },
+    {
+      "name": "Villanova University",
+      "nicknames": [
+        "Villanova",
+        "Nova"
+      ]
+    },
+    {
+      "name": "Louisiana State University",
+      "nicknames": [
+        "LSU"
+      ]
+    },
+    {
+      "name": "Florida State University",
+      "nicknames": [
+        "FSU",
+        "Florida St"
+      ]
+    },
+    {
+      "name": "University of Iowa",
+      "nicknames": [
+        "Iowa"
+      ]
+    },
+    {
+      "name": "University at Buffalo ",
+      "nicknames": [
+        "Buffalo"
+      ]
+    },
+    {
+      "name": "Mississippi State University",
+      "nicknames": [
+        "Mississippi St",
+        "MS St"
+      ]
+    }
+  ]
+}
